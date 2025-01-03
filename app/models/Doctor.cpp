@@ -6,15 +6,14 @@
 
 using namespace std;
 
-Doctor::Doctor() : User(), doctorId(0), workHours(""), description(""), consultationType(""), categorieId(0), villeId(0) {}
+Doctor::Doctor() : User(), workHours(""), description(""), consultationType(""), categorieId(0), villeId(0) {}
 
-Doctor::Doctor(int userId, int doctorId, string nom, string prenom, string email,
+Doctor::Doctor(int userId, string nom, string prenom, string email,
                string password, string adresse, string telephone, string sexe,
                string workHours, string description, string consultationType,
                int categorieId, int villeId)
 : User(userId, nom, prenom, email, password, adresse, telephone, sexe),
-doctorId(doctorId), workHours(workHours), description(description),
-consultationType(consultationType), categorieId(categorieId), villeId(villeId) {}
+workHours(workHours), description(description), consultationType(consultationType), categorieId(categorieId), villeId(villeId) {}
 
 Doctor::~Doctor() {}
 
@@ -22,63 +21,62 @@ void Doctor::create(OracleConnection& conn) {
     // Create user first
     User::create(conn);
 
-    // Insert into Doctors table
-    string query = "INSERT INTO Doctors (doctor_id, user_id, heure_travail, description, type_consultation, categorie_id, ville_id) "
-    "VALUES (" + to_string(doctorId) + ", " + to_string(getId()) + ", '" + workHours + "', '" + description +
-    "', '" + consultationType + "', " + to_string(categorieId) + ", " + to_string(villeId) + ")";
+    // Insert doctor-specific data into Users table (workHours, description, consultationType, categorieId, villeId)
+    string query = "UPDATE Users SET heure_travail = '" + workHours + "', description = '" + description +
+    "', type_consultation = '" + consultationType + "', categorie_id = " + to_string(categorieId) +
+    ", ville_id = " + to_string(villeId) +", role = 'doctor'" +" WHERE user_id = " + to_string(getId());
     conn.executeQuery(query);
 }
 
-bool Doctor::read(OracleConnection& conn, int doctorId) {
-    // Read doctor-specific data
-    string query = "SELECT * FROM Doctors WHERE doctor_id = " + to_string(doctorId);
-    vector<map<string, string>> result = conn.executeQuery(query);
+bool Doctor::read(OracleConnection& conn, int userId) {
+    // Read user-specific data from Users table (doctor data is included within Users)
+    bool result = User::read(conn, userId);
 
-    if (!result.empty()) {
-        map<string, string> row = result[0];
-        this->doctorId = doctorId;
-        this->workHours = row["HEURE_TRAVAIL"];
-        this->description = row["DESCRIPTION"];
-        this->consultationType = row["TYPE_CONSULTATION"];
-        this->categorieId = stoi(row["CATEGORIE_ID"]);
-        this->villeId = stoi(row["VILLE_ID"]);
+    if (result) {
+        // Read doctor-specific data
+        string query = "SELECT heure_travail, description, type_consultation, categorie_id, ville_id FROM Users WHERE user_id = " + to_string(userId);
+        vector<map<string, string>> resultData = conn.executeQuery(query);
 
-        // Read user data
-        int userId = stoi(row["USER_ID"]);
-        return User::read(conn, userId);
+        if (!resultData.empty()) {
+            map<string, string> row = resultData[0];
+            workHours = row["HEURE_TRAVAIL"];
+            description = row["DESCRIPTION"];
+            consultationType = row["TYPE_CONSULTATION"];
+            categorieId = stoi(row["CATEGORIE_ID"]);
+            villeId = stoi(row["VILLE_ID"]);
+        }
     }
-    return false;
+
+    return result;
 }
 
 void Doctor::update(OracleConnection& conn) {
-    // Update user first
+    // Update user data first
     User::update(conn);
 
-    // Update Doctors table
-    string query = "UPDATE Doctors SET heure_travail = '" + workHours + "', description = '" + description +
+    // Then update doctor-specific data within Users table
+    string query = "UPDATE Users SET heure_travail = '" + workHours + "', description = '" + description +
     "', type_consultation = '" + consultationType + "', categorie_id = " + to_string(categorieId) +
-    ", ville_id = " + to_string(villeId) + " WHERE doctor_id = " + to_string(doctorId);
+    ", ville_id = " + to_string(villeId) + " WHERE user_id = " + to_string(getId());
     conn.executeQuery(query);
 }
 
 void Doctor::deleteRecord(OracleConnection& conn) {
-    // Delete from Doctors first
-    string query = "DELETE FROM Doctors WHERE doctor_id = " + to_string(doctorId);
-    conn.executeQuery(query);
-
-    // Then delete from Users
+    // Delete doctor-specific data (handled by deleting the entire user)
     User::deleteRecord(conn);
 }
 
-int Doctor::getDoctorId() { return doctorId; }
-void Doctor::setDoctorId(int doctorId) { this->doctorId = doctorId; }
 string Doctor::getWorkHours() { return workHours; }
 void Doctor::setWorkHours(string workHours) { this->workHours = workHours; }
+
 string Doctor::getDescription() { return description; }
 void Doctor::setDescription(string description) { this->description = description; }
+
 string Doctor::getConsultationType() { return consultationType; }
 void Doctor::setConsultationType(string consultationType) { this->consultationType = consultationType; }
+
 int Doctor::getCategorieId() { return categorieId; }
 void Doctor::setCategorieId(int categorieId) { this->categorieId = categorieId; }
+
 int Doctor::getVilleId() { return villeId; }
 void Doctor::setVilleId(int villeId) { this->villeId = villeId; }

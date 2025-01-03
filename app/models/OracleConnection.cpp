@@ -210,6 +210,17 @@ void OracleConnection::executeAndPrintQuery(const char *query) {
     }
 }
 
+int OracleConnection::getGeneratedId(const string& sequenceName) {
+    // Query the sequence's current value (CURRVAL) to get the last inserted ID
+    string query = "SELECT " + sequenceName + ".CURRVAL FROM dual";  // Use CURRVAL for Oracle sequences
+    vector<map<string, string>> result = executeQuery(query);  // Placeholder for query execution
+
+    if (!result.empty()) {
+        return stoi(result[0]["CURRVAL"]);  // Return the ID from the result
+    }
+    return -1;  // Return a default value if no result found
+}
+
 OracleConnection::~OracleConnection() {
     if (svc_ctx) OCIHandleFree(svc_ctx, OCI_HTYPE_SVCCTX);
     if (ses) OCIHandleFree(ses, OCI_HTYPE_SESSION);

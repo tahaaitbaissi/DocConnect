@@ -9,8 +9,10 @@ Categorie::Categorie(int id, string libelle) : id(id), libelle(libelle) {}
 Categorie::~Categorie() {}
 
 void Categorie::create(OracleConnection& conn) {
-    string query = "INSERT INTO Categories (categorie_id, libelle) VALUES ('" + to_string(id) + "', '" + libelle + "')";
+    string query = "INSERT INTO Categories (categorie_id, libelle) VALUES (seq_categories.NEXTVAL, '" + libelle + "')";
     conn.executeQuery(query);
+
+    this->id = conn.getGeneratedId("seq_categories");
 }
 
 bool Categorie::read(OracleConnection& conn, int id) {

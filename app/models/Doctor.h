@@ -10,8 +10,7 @@ using namespace std;
 
 class Doctor : public User {
 private:
-    int doctorId;             // ID specific to the Doctors table
-    string workHours;         // Corresponds to heure_travail in the Doctors table
+    string workHours;         // Corresponds to heure_travail in the Users table
     string description;       // Doctor's description
     string consultationType;  // Single consultation type, e.g., "domicile", "video", "cabinet"
     int categorieId;          // Foreign key to Categories
@@ -19,21 +18,19 @@ private:
 
 public:
     Doctor();
-    Doctor(int userId, int doctorId, string nom, string prenom, string email,
+    Doctor(int userId, string nom, string prenom, string email,
            string password, string adresse, string telephone, string sexe,
            string workHours, string description, string consultationType,
            int categorieId, int villeId);
     ~Doctor();
 
     // CRUD Methods
-    void create(OracleConnection& conn); // Creates entries in both Users and Doctors
-    bool read(OracleConnection& conn, int doctorId); // Reads from both Users and Doctors
-    void update(OracleConnection& conn); // Updates both Users and Doctors
-    void deleteRecord(OracleConnection& conn); // Deletes from both Users and Doctors
+    void create(OracleConnection& conn); // Creates entries in Users (Doctor-specific data)
+    bool read(OracleConnection& conn, int userId); // Reads from Users (Doctor-specific data)
+    void update(OracleConnection& conn); // Updates Users (Doctor-specific data)
+    void deleteRecord(OracleConnection& conn); // Deletes from Users (Doctor-specific data)
 
     // Getters and Setters
-    int getDoctorId();
-    void setDoctorId(int doctorId);
     string getWorkHours();
     void setWorkHours(string workHours);
     string getDescription();

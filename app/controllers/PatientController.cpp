@@ -35,7 +35,7 @@ bool PatientController::scheduleAppointment(OracleConnection& conn, int patientI
 // Search for patients by name
 vector<Patient> PatientController::searchPatientsByName(OracleConnection& conn, string name) {
     vector<Patient> patients;
-    string query = "SELECT patient_id FROM Patients WHERE LOWER(nom) LIKE '%" + name + "%'";
+    string query = "SELECT user_id FROM User WHERE LOWER(nom) LIKE '%" + name + "%'";
     vector<map<string, string>> result = conn.executeQuery(query);
 
     for (const auto& row : result) {

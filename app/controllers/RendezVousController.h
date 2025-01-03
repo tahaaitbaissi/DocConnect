@@ -16,8 +16,8 @@ public:
     ~RendezVousController();
 
     // CRUD Methods
-    bool createAppointment(OracleConnection& conn, int doctorId, int patientId, string date, string time, double tariff, string consultationType);
-    bool updateAppointment(OracleConnection& conn, int appointmentId, string newDate, string newTime, double newTariff);
+    bool createAppointment(OracleConnection& conn, int doctorId, int patientId, string time, double tariff, string consultationType);
+    bool updateAppointment(OracleConnection& conn, int appointmentId, string newTime, double newTariff);
     bool cancelAppointment(OracleConnection& conn, int appointmentId);
 
     // Business Logic Methods

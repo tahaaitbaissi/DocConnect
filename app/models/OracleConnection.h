@@ -24,6 +24,7 @@ public:
     void connect();
     vector<map <string, string>> executeQuery(const string& query);
     void executeAndPrintQuery(const char *query);
+    int getGeneratedId(const string& sequenceName);
     ~OracleConnection();
 };
 

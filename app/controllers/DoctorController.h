@@ -18,7 +18,6 @@ public:
 
     // Functionality
     vector<RendezVous> getAppointmentsForDoctor(OracleConnection& conn, int doctorId);
-    bool addConsultationType(OracleConnection& conn, int doctorId, string consultationType);
     vector<Doctor> getDoctorsByCategory(OracleConnection& conn, int categoryId);
     vector<Doctor> getDoctorsByCity(OracleConnection& conn, int cityId);
     bool assignDoctorToCategory(OracleConnection& conn, int doctorId, int categoryId);

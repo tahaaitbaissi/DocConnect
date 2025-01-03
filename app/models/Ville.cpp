@@ -9,8 +9,10 @@ Ville::Ville(int id, string nom) : id(id), nom(nom) {}
 Ville::~Ville() {}
 
 void Ville::create(OracleConnection& conn) {
-    string query = "INSERT INTO Villes (ville_id, nom) VALUES ('" + to_string(id) + "', '" + nom + "')";
+    string query = "INSERT INTO Villes (ville_id, nom) VALUES (seq_villes.NEXTVAL, '" + nom + "')";
     conn.executeQuery(query);
+
+    this->id = conn.getGeneratedId("seq_villes");
 }
 
 bool Ville::read(OracleConnection& conn, int id) {

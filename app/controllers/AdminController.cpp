@@ -28,12 +28,12 @@ void AdminController::deleteUser(OracleConnection& conn, int userId) {
 // Get all doctors
 vector<Doctor> AdminController::getAllDoctors(OracleConnection& conn) {
     vector<Doctor> doctors;
-    string query = "SELECT doctor_id FROM Doctors";
+    string query = "SELECT user_id FROM Users WHERE role = 'doctor'";
     vector<map<string, string>> result = conn.executeQuery(query);
 
     for (const auto& row : result) {
         Doctor doctor;
-        int doctorId = stoi(row.at("DOCTOR_ID"));
+        int doctorId = stoi(row.at("USER_ID"));
         if (doctor.read(conn, doctorId)) {
             doctors.push_back(doctor);
         }
@@ -41,21 +41,15 @@ vector<Doctor> AdminController::getAllDoctors(OracleConnection& conn) {
     return doctors;
 }
 
-// Delete a doctor by doctorId
-void AdminController::deleteDoctor(OracleConnection& conn, int doctorId) {
-    string query = "DELETE FROM Doctors WHERE doctor_id = " + to_string(doctorId);
-    conn.executeQuery(query);
-}
-
 // Get all patients
 vector<Patient> AdminController::getAllPatients(OracleConnection& conn) {
     vector<Patient> patients;
-    string query = "SELECT patient_id FROM Patients";
+    string query = "SELECT user_id FROM Users WHERE role = 'patient'";
     vector<map<string, string>> result = conn.executeQuery(query);
 
     for (const auto& row : result) {
         Patient patient;
-        int patientId = stoi(row.at("PATIENT_ID"));
+        int patientId = stoi(row.at("USER_ID"));
         if (patient.read(conn, patientId)) {
             patients.push_back(patient);
         }
@@ -63,20 +57,14 @@ vector<Patient> AdminController::getAllPatients(OracleConnection& conn) {
     return patients;
 }
 
-// Delete a patient by patientId
-void AdminController::deletePatient(OracleConnection& conn, int patientId) {
-    string query = "DELETE FROM Patients WHERE patient_id = " + to_string(patientId);
-    conn.executeQuery(query);
-}
-
 // Update doctor details
 void AdminController::updateDoctorDetails(OracleConnection& conn, int doctorId, string workHours, string description) {
-    string query = "UPDATE Doctors SET heure_travail = '" + workHours + "', description = '" + description + "' WHERE doctor_id = " + to_string(doctorId);
+    string query = "UPDATE Users SET heure_travail = '" + workHours + "', description = '" + description + "' WHERE user_id = " + to_string(doctorId);
     conn.executeQuery(query);
 }
 
 // Update patient details
 void AdminController::updatePatientDetails(OracleConnection& conn, int patientId, string dateOfBirth) {
-    string query = "UPDATE Patients SET date_naissance = '" + dateOfBirth + "' WHERE patient_id = " + to_string(patientId);
+    string query = "UPDATE Users SET date_naissance = '" + dateOfBirth + "' WHERE user_id = " + to_string(patientId);
     conn.executeQuery(query);
 }

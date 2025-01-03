@@ -20,8 +20,8 @@ protected:
 
 public:
     User();
-    User(int id, const string& nom, const string& prenom, const string& email,
-         const string& password, const string& adresse, const string& telephone, const string& sexe);
+    User(int id, string nom, string prenom, string email,
+         string password, string adresse, string telephone, string sexe);
     virtual ~User();
 
     // CRUD Methods
@@ -31,14 +31,22 @@ public:
     void deleteRecord(OracleConnection& conn);
 
     // Getters and Setters
-    int getId() const;
+    int getId();
     void setId(int id);
-    string getNom() const;
-    void setNom(const string& nom);
-    string getEmail() const;
-    void setEmail(const string& nom);
-
-    // Add similar methods for other attributes...
+    string getNom();
+    void setNom(string nom);
+    string getPrenom();
+    void setPrenom(string prenom);
+    string getEmail();
+    void setEmail(string email);
+    string getPassword();
+    void setPassword(string password);
+    string getAdresse();
+    void setAdresse(string adresse);
+    string getTelephone();
+    void setTelephone(string telephone);
+    string getSexe();
+    void setSexe(string sexe);
 };
 
 #endif // USER_H

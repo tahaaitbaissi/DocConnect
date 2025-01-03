@@ -4,23 +4,26 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
 User::User() : id(0), nom(""), prenom(""), email(""), password(""), adresse(""), telephone(""), sexe("") {}
-User::User(int id, const string& nom, const string& prenom, const string& email,
-           const string& password, const string& adresse, const string& telephone, const string& sexe)
-    : id(id), nom(nom), prenom(prenom), email(email), password(password), adresse(adresse), telephone(telephone), sexe(sexe) {}
+
+User::User(int id, string nom, string prenom, string email,
+           string password, string adresse, string telephone, string sexe)
+: id(id), nom(nom), prenom(prenom), email(email), password(password), adresse(adresse), telephone(telephone), sexe(sexe) {}
 
 User::~User() {}
 
 void User::create(OracleConnection& conn) {
-    cout << "id : " <<  to_string(id) << endl;
-    string query = "INSERT INTO Users (user_id, nom, prenom, email, password, adresse, telephone, sexe) VALUES ('" + 
-                         to_string(id) + "', '" + 
-                         nom + "', '" + prenom + "', '" + email + "', '" + password + "', '" + adresse + "', '" +
-                         telephone + "', '" + sexe + "')";
+    // Using concatenation for the SQL query string
+    string query = "INSERT INTO Users (user_id, nom, prenom, email, password, adresse, telephone, sexe, role) "
+    "VALUES (SEQ_USERS.NEXTVAL, '" + nom + "', '" + prenom + "', '" + email + "', '" + password + "', '"
+    + adresse + "', '" + telephone + "', '" + sexe + "', 'patient')";
     conn.executeQuery(query);
+
+    this->id = conn.getGeneratedId("seq_users");
 }
 
 bool User::read(OracleConnection& conn, int id) {
@@ -42,9 +45,10 @@ bool User::read(OracleConnection& conn, int id) {
 }
 
 void User::update(OracleConnection& conn) {
+    // Using concatenation for the SQL query string
     string query = "UPDATE Users SET nom = '" + nom + "', prenom = '" + prenom + "', email = '" + email +
-                         "', password = '" + password + "', adresse = '" + adresse + "', telephone = '" + telephone +
-                         "', sexe = '" + sexe + "' WHERE user_id = " + to_string(id);
+    "', password = '" + password + "', adresse = '" + adresse + "', telephone = '" + telephone +
+    "', sexe = '" + sexe + "' WHERE user_id = " + to_string(id);
     conn.executeQuery(query);
 }
 
@@ -53,10 +57,26 @@ void User::deleteRecord(OracleConnection& conn) {
     conn.executeQuery(query);
 }
 
-int User::getId() const { return id; }
+int User::getId() { return id; }
 void User::setId(int id) { this->id = id; }
-string User::getNom() const { return nom; }
-void User::setNom(const string& nom) { this->nom = nom; }
-string User::getEmail() const { return email; }
-void User::setEmail(const string& email) { this->email = email; }
-// Add similar methods for other attributes...
+
+string User::getNom() { return nom; }
+void User::setNom(string nom) { this->nom = nom; }
+
+string User::getPrenom() { return prenom; }
+void User::setPrenom(string prenom) { this->prenom = prenom; }
+
+string User::getEmail() { return email; }
+void User::setEmail(string email) { this->email = email; }
+
+string User::getPassword() { return password; }
+void User::setPassword(string password) { this->password = password; }
+
+string User::getAdresse() { return adresse; }
+void User::setAdresse(string adresse) { this->adresse = adresse; }
+
+string User::getTelephone() { return telephone; }
+void User::setTelephone(string telephone) { this->telephone = telephone; }
+
+string User::getSexe() { return sexe; }
+void User::setSexe(string sexe) { this->sexe = sexe; }

@@ -18,9 +18,7 @@ public:
     vector<User> getAllUsers(OracleConnection& conn);
     void deleteUser(OracleConnection& conn, int userId);
     vector<Doctor> getAllDoctors(OracleConnection& conn);
-    void deleteDoctor(OracleConnection& conn, int doctorId);
     vector<Patient> getAllPatients(OracleConnection& conn);
-    void deletePatient(OracleConnection& conn, int patientId);
     void updateDoctorDetails(OracleConnection& conn, int doctorId, string workHours, string description);
     void updatePatientDetails(OracleConnection& conn, int patientId, string dateOfBirth);
 };

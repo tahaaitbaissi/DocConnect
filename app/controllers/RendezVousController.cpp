@@ -5,13 +5,13 @@ RendezVousController::RendezVousController() {}
 RendezVousController::~RendezVousController() {}
 
 // Create a new appointment
-bool RendezVousController::createAppointment(OracleConnection& conn, int doctorId, int patientId, string date, string time, double tariff, string consultationType) {
+bool RendezVousController::createAppointment(OracleConnection& conn, int doctorId, int patientId, string time, double tariff, string consultationType) {
     if (checkForConflictingAppointments(conn, doctorId, date, time)) {
         cout << "Appointment conflict detected. Please choose a different time." << endl;
         return false;
     }
 
-    string query = "INSERT INTO RendezVous (doctor_id, patient_id, date, time, tarifs, type_consultation) VALUES (" +
+    string query = "INSERT INTO RendezVous (rendezvous_id, doctor_id, patient_id, temps, tarifs, type_consultation) VALUES ( seq_rendezvous.NEXTVAL" +
     to_string(doctorId) + ", " + to_string(patientId) + ", '" + date + "', '" + time + "', " +
     to_string(tariff) + ", '" + consultationType + "')";
     try {
@@ -25,8 +25,8 @@ bool RendezVousController::createAppointment(OracleConnection& conn, int doctorI
 }
 
 // Update an existing appointment
-bool RendezVousController::updateAppointment(OracleConnection& conn, int appointmentId, string newDate, string newTime, double newTariff) {
-    string query = "UPDATE RendezVous SET date = '" + newDate + "', time = '" + newTime + "', tarifs = " +
+bool RendezVousController::updateAppointment(OracleConnection& conn, int appointmentId, string newTime, double newTariff) {
+    string query = "UPDATE RendezVous SET temps = '" + newTime + "', tarifs = " +
     to_string(newTariff) + " WHERE rendezvous_id = " + to_string(appointmentId);
     try {
         conn.executeQuery(query);
@@ -93,9 +93,9 @@ RendezVous RendezVousController::getAppointmentDetails(OracleConnection& conn, i
 }
 
 // Check if an appointment conflicts with another one
-bool RendezVousController::checkForConflictingAppointments(OracleConnection& conn, int doctorId, string date, string time) {
+bool RendezVousController::checkForConflictingAppointments(OracleConnection& conn, int doctorId, string time) {
     string query = "SELECT * FROM RendezVous WHERE doctor_id = " + to_string(doctorId) +
-    " AND date = '" + date + "' AND time = '" + time + "'";
+    " AND date = '" + date + "' AND temps = '" + time + "'";
     vector<map<string, string>> result = conn.executeQuery(query);
     return !result.empty();
 }

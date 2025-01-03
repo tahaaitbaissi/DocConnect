@@ -13,14 +13,15 @@ RendezVous::RendezVous(int id, string temps, double tarifs, string typeConsultat
 RendezVous::~RendezVous() {}
 
 void RendezVous::create(OracleConnection& conn) {
-    string query = "INSERT INTO APPOINTMENTS (APPOINTMENT_ID, temps, tarifs, type_consultation, patient_id, docteur_id) VALUES ('" +
-    to_string(id) + "', '" + temps + "', '" + to_string(tarifs) + "', '" +
+    string query = "INSERT INTO RENDEZVOUS (RENDEZVOUS_ID, temps, tarifs, type_consultation, patient_id, docteur_id) VALUES (seq_rendezvous.NEXTVAL, '" + temps + "', '" + to_string(tarifs) + "', '" +
     typeConsultation + "', '" + to_string(patientId) + "', '" + to_string(docteurId) + "')";
     conn.executeQuery(query);
+
+    this->id = conn.getGeneratedId("seq_rendezvous");
 }
 
 bool RendezVous::read(OracleConnection& conn, int id) {
-    string query = "SELECT * FROM APPOINTMENTS WHERE APPOINTMENT_ID = " + to_string(id);
+    string query = "SELECT * FROM RENDEZVOUS WHERE RENDEZVOUS_ID = " + to_string(id);
     vector<map<string, string>> result = conn.executeQuery(query);
     if (!result.empty()) {
         map<string, string> row = result[0];
@@ -36,15 +37,15 @@ bool RendezVous::read(OracleConnection& conn, int id) {
 }
 
 void RendezVous::update(OracleConnection& conn) {
-    string query = "UPDATE APPOINTMENTS SET temps = '" + temps + "', tarifs = '" + to_string(tarifs) +
+    string query = "UPDATE RENDEZVOUS SET temps = '" + temps + "', tarifs = '" + to_string(tarifs) +
     "', type_consultation = '" + typeConsultation + "', patient_id = '" +
     to_string(patientId) + "', docteur_id = '" + to_string(docteurId) +
-    "' WHERE APPOINTMENT_ID = " + to_string(id);
+    "' WHERE RENDEZVOUS_ID = " + to_string(id);
     conn.executeQuery(query);
 }
 
 void RendezVous::deleteRecord(OracleConnection& conn) {
-    string query = "DELETE FROM APPOINTMENTS WHERE APPOINTMENT_ID = " + to_string(id);
+    string query = "DELETE FROM RENDEZVOUS WHERE RENDEZVOUS_ID = " + to_string(id);
     conn.executeQuery(query);
 }
 
