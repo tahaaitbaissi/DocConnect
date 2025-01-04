@@ -6,7 +6,7 @@ SearchController::~SearchController() {}
 // Search doctors by name
 vector<Doctor> SearchController::searchDoctorsByName(OracleConnection& conn, string name) {
     vector<Doctor> doctors;
-    string query = "SELECT user_id FROM Users WHERE nom LIKE '%" + name + "%' OR prenom LIKE '%" + name + "%'";
+    string query = "SELECT user_id FROM Users WHERE nom LIKE '%" + name + "%' OR prenom LIKE '%" + name + "%' AND role = 'doctor'";
     vector<map<string, string>> result = conn.executeQuery(query);
 
     for (const auto& row : result) {
@@ -22,7 +22,7 @@ vector<Doctor> SearchController::searchDoctorsByName(OracleConnection& conn, str
 // Search patients by name
 vector<Patient> SearchController::searchPatientsByName(OracleConnection& conn, string name) {
     vector<Patient> patients;
-    string query = "SELECT user_id FROM Users WHERE nom LIKE '%" + name + "%' OR prenom LIKE '%" + name + "%'";
+    string query = "SELECT user_id FROM Users WHERE nom LIKE '%" + name + "%' OR prenom LIKE '%" + name + "%'AND role = 'patient'";
     vector<map<string, string>> result = conn.executeQuery(query);
 
     for (const auto& row : result) {

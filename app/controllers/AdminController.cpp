@@ -68,3 +68,6 @@ void AdminController::updatePatientDetails(OracleConnection& conn, int patientId
     string query = "UPDATE Users SET date_naissance = '" + dateOfBirth + "' WHERE user_id = " + to_string(patientId);
     conn.executeQuery(query);
 }
+
+
+

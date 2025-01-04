@@ -20,7 +20,7 @@ all: $(TARGET)
 
 # Link Object Files to Create Executable
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(OBJ_FILES) $(LDFLAGS) -o $@
+	$(CXX) $(OBJ_FILES) $(LDFLAGS) -o $@ -g
 
 # Compile Source Files to Object Files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)

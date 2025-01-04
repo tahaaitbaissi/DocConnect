@@ -17,6 +17,7 @@ protected:
     string adresse;
     string telephone;
     string sexe;
+    string role;
 
 public:
     User();
@@ -47,6 +48,8 @@ public:
     void setTelephone(string telephone);
     string getSexe();
     void setSexe(string sexe);
+
+    string getRole();
 };
 
 #endif // USER_H

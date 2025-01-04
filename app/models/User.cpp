@@ -39,9 +39,14 @@ bool User::read(OracleConnection& conn, int id) {
         adresse = row["ADRESSE"];
         telephone = row["TELEPHONE"];
         sexe = row["SEXE"];
+        role = row["ROLE"];
         return true;
     }
     return false;
+}
+
+string User::getRole() {
+    return role;
 }
 
 void User::update(OracleConnection& conn) {

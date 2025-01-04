@@ -26,7 +26,7 @@ public:
     RendezVous getAppointmentDetails(OracleConnection& conn, int appointmentId);
 
     // Specific Features
-    bool checkForConflictingAppointments(OracleConnection& conn, int doctorId, string date, string time);
+    bool checkForConflictingAppointments(OracleConnection& conn, int doctorId, string time);
     vector<RendezVous> getAppointmentsByConsultationType(OracleConnection& conn, string consultationType);
 };
 
