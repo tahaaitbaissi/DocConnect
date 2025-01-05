@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DoctorDashboard.css'; // Assuming you have a CSS file for styling
+import {useUser} from "../UserContext"
 
 const DoctorDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     setLoading(true);
     // Assuming you have an endpoint that returns the appointments for a doctor
-    axios.get('https://example.com/api/appointments')
+    axios.get(`http://127.0.0.1/rendezvous/docteur/${user.id}`)
       .then(response => {
         setAppointments(response.data); // Set the list of appointments
         setLoading(false);
@@ -18,7 +20,7 @@ const DoctorDashboard = () => {
         console.error('There was an error fetching the appointments!', error);
         setLoading(false);
       });
-  }, []);
+  }, [user]);
 
   return (
     <div className="doctor-dashboard">

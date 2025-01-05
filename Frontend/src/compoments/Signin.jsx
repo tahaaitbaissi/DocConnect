@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Signin.css'; 
 import { Link,useNavigate } from 'react-router-dom'; // Assuming you have a CSS file for styling
+import { useUser } from "../UserContext";
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const Signin = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +21,8 @@ const Signin = () => {
       .then(response => {
         setLoading(false);
         // Handle the response, such as saving the token or user info
-        console.log(response.data.role);
+        console.log(response.data);
+        setUser(response.data);
         if(response.data.role==="doctor"){
           navigate("/doctor-dashboard");
         }else{
