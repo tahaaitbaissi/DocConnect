@@ -30,7 +30,7 @@ bool RendezVous::read(OracleConnection& conn, int id) {
         tarifs = stod(row["TARIFS"]);
         typeConsultation = row["TYPE_CONSULTATION"];
         patientId = stoi(row["PATIENT_ID"]);
-        docteurId = stoi(row["DOCTEUR_ID"]);
+        docteurId = stoi(row["DOCTOR_ID"]);
         return true;
     }
     return false;

@@ -11,7 +11,7 @@ const DoctorDashboard = () => {
   useEffect(() => {
     setLoading(true);
     // Assuming you have an endpoint that returns the appointments for a doctor
-    axios.get(`http://127.0.0.1/rendezvous/docteur/${user.id}`)
+    axios.get(`http://127.0.0.1:8080/rendezvous/doctor/${user.id}`)
       .then(response => {
         setAppointments(response.data); // Set the list of appointments
         setLoading(false);
