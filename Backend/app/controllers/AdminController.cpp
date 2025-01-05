@@ -19,6 +19,36 @@ vector<User> AdminController::getAllUsers(OracleConnection& conn) {
     return users;
 }
 
+vector<Ville> AdminController::getAllCities(OracleConnection& conn) {
+    vector<Ville> villes;
+    string query = "SELECT ville_id FROM villes";
+    vector<map<string, string>> result = conn.executeQuery(query);
+
+    for (const auto& row : result) {
+        Ville ville;
+        int villeId = stoi(row.at("VILLE_ID"));
+        if (ville.read(conn, villeId)) {
+            villes.push_back(ville);
+        }
+    }
+    return villes;
+}
+
+vector<Categorie> AdminController::getAllCategories(OracleConnection& conn) {
+    vector<Categorie> cats;
+    string query = "SELECT categorie_id FROM categories";
+    vector<map<string, string>> result = conn.executeQuery(query);
+
+    for (const auto& row : result) {
+        Categorie cat;
+        int catId = stoi(row.at("CATEGORIE_ID"));
+        if (cat.read(conn, catId)) {
+            cats.push_back(cat);
+        }
+    }
+    return cats;
+}
+
 // Delete a user by userId
 void AdminController::deleteUser(OracleConnection& conn, int userId) {
     string query = "DELETE FROM Users WHERE user_id = " + to_string(userId);

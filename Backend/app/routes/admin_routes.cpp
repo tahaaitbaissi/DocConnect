@@ -23,6 +23,32 @@ void setupAdminRoutes(crow::App<crow::CORSHandler>& app, OracleConnection& conn)
         return response;
     });
 
+    CROW_ROUTE(app, "/admin/villes")
+    ([&conn, &adminController]() {
+        auto villes = adminController.getAllCities(conn);
+        crow::json::wvalue response;
+
+        for (size_t i = 0; i < villes.size(); ++i) {
+            response[i]["id"] = villes[i].getId();
+            response[i]["nom"] = villes[i].getNom();
+        }
+
+        return response;
+    });
+
+    CROW_ROUTE(app, "/admin/categories")
+    ([&conn, &adminController]() {
+        auto cats = adminController.getAllCategories(conn);
+        crow::json::wvalue response;
+
+        for (size_t i = 0; i < cats.size(); ++i) {
+            response[i]["id"] = cats[i].getId();
+            response[i]["libelle"] = cats[i].getLibelle();
+        }
+
+        return response;
+    });
+
     // 2. Delete a user by ID
     CROW_ROUTE(app, "/admin/users/<int>").methods(crow::HTTPMethod::DELETE)
     ([&conn, &adminController](int userId) {
