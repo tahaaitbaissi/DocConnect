@@ -4,9 +4,11 @@ import Signin from './compoments/Signin';
 import Patient from './compoments/Patient';
 import DoctorDashboard from './compoments/DoctorDashboard';
 import ProfilePage from './compoments/Profilepage';
+import { UserProvider } from "./UserContext";
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <Routes>
         <Route path="/Signin" element={<Signin />} />
@@ -17,6 +19,7 @@ function App() {
         <Route path="/" element={<Signup />} />
       </Routes>
     </Router>
+    </UserProvider>
   );
 }
 
