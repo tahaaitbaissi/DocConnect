@@ -94,7 +94,10 @@ void setupRendezVousRoutes(crow::App<crow::CORSHandler>& app, OracleConnection& 
             response[i]["patient_id"] = appointments[i].getPatientId();
         }
 
-        return response;
+        auto res = crow::response(response);
+        res.add_header("Access-Control-Allow-Origin", "http://localhost:3000");
+        res.add_header("Content-Type", "application/json");
+        return res;
     });
 
     // 6. Get details of a specific appointment

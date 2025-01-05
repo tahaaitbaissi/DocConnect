@@ -13,6 +13,7 @@ const DoctorDashboard = () => {
     // Assuming you have an endpoint that returns the appointments for a doctor
     axios.get(`http://127.0.0.1:8080/rendezvous/doctor/${user.id}`)
       .then(response => {
+        console.log(response.data);
         setAppointments(response.data); // Set the list of appointments
         setLoading(false);
       })
@@ -20,7 +21,7 @@ const DoctorDashboard = () => {
         console.error('There was an error fetching the appointments!', error);
         setLoading(false);
       });
-  }, [user]);
+  }, [user.id]);
 
   return (
     <div className="doctor-dashboard">
