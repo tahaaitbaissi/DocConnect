@@ -1,0 +1,165 @@
+/* Import Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif; /* Use Poppins font */
+  background-color: #6f6565;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.patient-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-title {
+  color: #000;
+}
+
+.header {
+  background-color: #1f59a4;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.app-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.profile-button {
+  padding: 20px 30px;
+  background-color: #e5b209;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.profile-button:hover {
+  background-color: #e5b209;
+}
+
+main {
+  padding: 40px;
+  background-color: #f7f7f7;
+}
+
+.intro-section {
+  text-align: center;
+}
+
+.intro-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.search-bar,
+.city-select {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #333;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #e5b209;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-button:hover {
+  background-color: #1f59a4;
+}
+
+.info-sections {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.services-section,
+.about-section {
+  width: 48%;
+  background-color: #969696;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.services-title,
+.about-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f59a4;
+}
+
+.services-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.services-list li {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.about-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.read-more-button {
+  padding: 10px 20px;
+  background-color: #e5b209;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.read-more-button:hover {
+  background-color: #1f59a4;
+}
+
+.testimonials-section {
+  margin-top: 40px;
+}
+
+.testimonial {
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.footer {
+  background-color: #000;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.footer p {
+  margin: 5px 0;
+  font-size: 14px;
+}

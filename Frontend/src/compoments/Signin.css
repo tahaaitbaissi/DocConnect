@@ -1,0 +1,136 @@
+/* Import Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif; /* Use Poppins font */
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  color: rgb(0, 0, 0);
+}
+
+.signin-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #1f59a4; /* Blue header */
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(142, 137, 137, 0.5);
+}
+
+.app-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.m {
+  padding: 40px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  margin: 50px auto;
+  width: 400px;
+}
+
+.signin-section {
+  text-align: center;
+}
+
+.signin-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1f59a4;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #333;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+button.signin-button {
+  padding: 12px 20px;
+  background-color: #e5b209; /* Instagram yellow */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button.signin-button:hover {
+  background-color: #d560f3; /* Purple when hover */
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+/* Link for Signup */
+.signup-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signup-link p {
+  font-size: 16px;
+  color: rgb(32, 75, 185);
+}
+
+.signup-link a {
+  color: #e55d09; /* Instagram yellow */
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  color: #1f59a4; /* Blue color when hovering */
+}
+
+/* Responsiveness for mobile */
+@media (max-width: 600px) {
+  .signin-page {
+    padding: 20px;
+  }
+
+  main {
+    width: 100%;
+    margin: 0;
+  }
+
+  .signin-form {
+    width: 100%;
+  }
+
+  .m {
+    width: 90%;
+    padding: 20px;
+  }
+}
