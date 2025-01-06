@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './patient.css';
+import { useUser } from "../UserContext";
 
 const Patient = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Patient = () => {
   const [appointmentTime, setAppointmentTime] = useState('');
   const [consultationType, setConsultationType] = useState('');
   const [price, setPrice] = useState('');
+  const { user } = useUser();
 
   // Fetch cities and categories from the backend
   useEffect(() => {
@@ -66,14 +68,54 @@ const Patient = () => {
     setIsModalOpen(false);
   };
 
-  const handleConfirmAppointment = () => {
-    console.log({
-      doctor: selectedDoctor,
-      appointmentTime,
-      consultationType,
-      price,
-    });
+  const handleConfirmAppointment = async () => {
+    if (!selectedDoctor || !appointmentTime || !consultationType || !price) {
+      alert('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    // Function to format date to "31-DEC-24 11.00.00.000000 AM"
+    const formatTime = (dateTime) => {
+      const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const date = new Date(dateTime);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = months[date.getMonth()];
+      const year = String(date.getFullYear()).slice(-2);
+      const hours = date.getHours() % 12 || 12; // Convert 24-hour to 12-hour format
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      const milliseconds = "000000"; // Fixed value for milliseconds
+      const meridian = date.getHours() >= 12 ? "PM" : "AM";
+
+      return `${day}-${month}-${year} ${hours}.${minutes}.${seconds}.${milliseconds} ${meridian}`;
+    };
+
+    try {
+      const formattedTime = formatTime(appointmentTime);
+
+      const response = await axios.post('http://127.0.0.1:8080/rendezvous/create', {
+        doctor_id: selectedDoctor.id,
+        patient_id: 1, // Replace this with the actual patient ID
+        time: formattedTime,
+        tariff: parseFloat(price), // Ensure the price is sent as a number
+        consultation_type: consultationType,
+      });
+
+      if (response.status === 200) {
+        alert('Rendez-vous créé avec succès.');
+        setIsModalOpen(false);
+        setAppointmentTime('');
+        setConsultationType('');
+        setPrice('');
+      } else {
+        alert('Erreur lors de la création du rendez-vous. Veuillez réessayer.');
+      }
+    } catch (error) {
+      console.error('Error creating appointment:', error);
+      alert('Une erreur s\'est produite lors de la création du rendez-vous.');
+    }
   };
+
 
   return (
     <div className="patient-page">
@@ -186,7 +228,28 @@ const Patient = () => {
           </div>
         </div>
       )}
+{/* Services and About Us Section */}
+<section className="info-sections">
+          {/* Services Section */}
+          <div className="services-section">
+            <h2 className="services-title">Nos Services</h2>
+            <ul className="services-list">
+              <li>Consultation en ligne</li>
+              <li>Rendez-vous rapide</li>
+              <li>Accès aux meilleurs médecins</li>
+              <li>Support 24/7</li>
+            </ul>
+          </div>
 
+          {/* About Us Section */}
+          <div className="about-section">
+            <h2 className="about-title">À Propos de Nous</h2>
+            <p className="about-text">
+              DoConnect vous permet de trouver et de consulter des médecins en quelques clics. Notre plateforme vous offre un accès facile à des médecins de confiance, avec la possibilité de prendre rendez-vous rapidement et de consulter en ligne pour un confort maximal.
+            </p>
+            
+          </div>
+        </section>
       {/* Footer */}
       <footer className="footer">
         <p>DoConnect - Votre plateforme de santé en ligne</p>

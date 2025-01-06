@@ -13,7 +13,7 @@ RendezVous::RendezVous(int id, string temps, double tarifs, string typeConsultat
 RendezVous::~RendezVous() {}
 
 void RendezVous::create(OracleConnection& conn) {
-    string query = "INSERT INTO RENDEZVOUS (RENDEZVOUS_ID, temps, tarifs, type_consultation, patient_id, docteur_id) VALUES (seq_rendezvous.NEXTVAL, '" + temps + "', '" + to_string(tarifs) + "', '" +
+    string query = "INSERT INTO RENDEZVOUS (RENDEZVOUS_ID, temps, tarifs, type_consultation, patient_id, doctor_id) VALUES (seq_rendezvous.NEXTVAL, '" + temps + "', '" + to_string(tarifs) + "', '" +
     typeConsultation + "', '" + to_string(patientId) + "', '" + to_string(docteurId) + "')";
     conn.executeQuery(query);
 
@@ -39,7 +39,7 @@ bool RendezVous::read(OracleConnection& conn, int id) {
 void RendezVous::update(OracleConnection& conn) {
     string query = "UPDATE RENDEZVOUS SET temps = '" + temps + "', tarifs = '" + to_string(tarifs) +
     "', type_consultation = '" + typeConsultation + "', patient_id = '" +
-    to_string(patientId) + "', docteur_id = '" + to_string(docteurId) +
+    to_string(patientId) + "', doctor_id = '" + to_string(docteurId) +
     "' WHERE RENDEZVOUS_ID = " + to_string(id);
     conn.executeQuery(query);
 }

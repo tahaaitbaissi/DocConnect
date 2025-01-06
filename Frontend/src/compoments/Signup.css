@@ -1,50 +1,49 @@
-/* Import Font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 /* General Styles */
-
-
 .signup-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  justify-content: space-between;
+  background-color: #f4f4f4;
 }
 
 .header {
   background-color: #1f59a4; /* Blue header */
   color: white;
-  padding: 20px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(142, 137, 137, 0.5);
+  box-shadow: 0 2px 5px rgba(142, 137, 137, 0.5);
 }
 
 .app-title {
-  font-size: 32px;
+  font-size: 22px; /* Smaller title */
   font-weight: bold;
 }
 
 .signup-section {
-  padding: 40px;
+  padding: 25px;
   background-color: #0b0a0a;
   border-radius: 10px;
-  margin: 50px auto;
-  width: 300px;
-  box-shadow: 0 2px 10px rgba(142, 137, 137, 0.5);
+  margin: 30px auto;
+  width: 100%;
+  max-width: 350px; /* Smaller max-width */
+  box-shadow: 0 2px 8px rgba(142, 137, 137, 0.5);
 }
 
 .signup-title {
-  font-size: 30px;
+  font-size: 24px; /* Adjusted title font size */
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #1f59a4;
+  text-align: center;
 }
 
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px; /* Reduced gap */
 }
 
 .form-item {
@@ -53,13 +52,14 @@
 }
 
 label {
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 5px;
+  color: #ccc;
 }
 
 input {
-  padding: 10px;
-  font-size: 16px;
+  padding: 8px 10px;
+  font-size: 14px;
   background-color: #333;
   border: none;
   color: white;
@@ -67,13 +67,14 @@ input {
 }
 
 button.signup-button {
-  padding: 12px 20px;
+  padding: 10px;
   background-color: #e5b209; /* Instagram yellow */
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 button.signup-button:hover {
@@ -82,21 +83,41 @@ button.signup-button:hover {
 
 .error-message {
   color: #e74c3c;
-  font-size: 14px;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 /* Responsiveness for mobile */
 @media (max-width: 600px) {
   .signup-page {
-    padding: 20px;
-  }
-
-  .signup-form {
-    width: 100%;
+    padding: 15px;
   }
 
   .signup-section {
     width: 90%;
     padding: 20px;
+  }
+
+  .signup-title {
+    font-size: 20px; /* Adjusted font size */
+  }
+
+  .signup-form {
+    gap: 8px; /* Reduced gap */
+  }
+
+  input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button.signup-button {
+    padding: 8px 15px; /* Smaller button */
+    font-size: 14px;
+  }
+
+  .error-message {
+    font-size: 12px;
   }
 }

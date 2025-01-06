@@ -1,0 +1,97 @@
+/* General page styles */
+.profile-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fa;
+  }
+  
+  .header {
+    background-color: #007bff;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .app-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .profile-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .profile-button:hover {
+    background-color: #c82333;
+  }
+  
+  .profile-section {
+    padding: 30px;
+    background-color: white;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .profile-info {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .profile-item {
+    margin: 10px 0;
+  }
+  
+  .profile-item strong {
+    color: #333;
+  }
+  
+  .footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer p {
+    margin: 5px 0;
+  }
+  
+  .footer p:first-child {
+    font-weight: bold;
+  }
+  
+  /* Loading state */
+  .loading {
+    text-align: center;
+    font-size: 20px;
+    color: #007bff;
+    margin-top: 50px;
+  }
+  
+  .error {
+    text-align: center;
+    font-size: 18px;
+    color: #dc3545;
+    margin-top: 50px;
+  }
+  

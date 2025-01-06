@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';  // Import Link
 import './Signup.css'; // Assuming you have a CSS file for styling
 
 const Signup = () => {
@@ -55,6 +56,7 @@ const Signup = () => {
         <section className="signup-section">
           <h2 className="signup-title">S'inscrire</h2>
           <form onSubmit={handleSubmit} className="signup-form">
+            {/* Form fields */}
             <div className="form-item">
               <label htmlFor="firstName">Nom</label>
               <input
@@ -155,6 +157,11 @@ const Signup = () => {
               {loading ? 'Chargement...' : "S'inscrire"}
             </button>
           </form>
+
+          {/* Login link */}
+          <div className="login-link">
+            <p>Tu as un compte ? <Link to="/Signin">SE CONNECTER</Link></p>
+          </div>
         </section>
       </main>
     </div>

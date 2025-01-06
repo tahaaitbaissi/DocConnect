@@ -5,17 +5,14 @@ RendezVousController::RendezVousController() {}
 RendezVousController::~RendezVousController() {}
 
 // Create a new appointment
-bool RendezVousController::createAppointment(OracleConnection& conn, int doctorId, int patientId, string time, double tariff, string consultationType) {
-    if (checkForConflictingAppointments(conn, doctorId, time)) {
+bool RendezVousController::createAppointment(OracleConnection& conn, RendezVous rdv) {
+    if (checkForConflictingAppointments(conn, rdv.getDocteurId(), rdv.getTemps())) {
         cout << "Appointment conflict detected. Please choose a different time." << endl;
         return false;
     }
 
-    string query = "INSERT INTO RendezVous (rendezvous_id, doctor_id, patient_id, temps, tarifs, type_consultation) VALUES ( seq_rendezvous.NEXTVAL" +
-    to_string(doctorId) + ", " + to_string(patientId) + ", '" + time + "', " +
-    to_string(tariff) + ", '" + consultationType + "')";
     try {
-        conn.executeQuery(query);
+        rdv.create(conn);
         cout << "Appointment created successfully." << endl;
         return true;
     } catch (...) {
@@ -95,7 +92,7 @@ RendezVous RendezVousController::getAppointmentDetails(OracleConnection& conn, i
 // Check if an appointment conflicts with another one
 bool RendezVousController::checkForConflictingAppointments(OracleConnection& conn, int doctorId, string time) {
     string query = "SELECT * FROM RendezVous WHERE doctor_id = " + to_string(doctorId) +
-    "AND temps = '" + time + "'";
+    " AND temps = '" + time + "'";
     vector<map<string, string>> result = conn.executeQuery(query);
     return !result.empty();
 }

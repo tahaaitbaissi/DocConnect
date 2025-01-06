@@ -1,5 +1,7 @@
 #include "rendezvous_routes.h"
 
+#include "../models/RendezVous.h"
+
 void setupRendezVousRoutes(crow::App<crow::CORSHandler>& app, OracleConnection& conn) {
     RendezVousController rendezVousController;
 
@@ -10,19 +12,31 @@ void setupRendezVousRoutes(crow::App<crow::CORSHandler>& app, OracleConnection& 
         if (!body || !body.has("doctor_id") || !body.has("patient_id") || !body.has("time") ||
             !body.has("tariff") || !body.has("consultation_type")) {
             return crow::response(400, "Invalid input data.");
-            }
+        }
 
-            int doctorId = body["doctor_id"].i();
+        int doctorId = body["doctor_id"].i();
         int patientId = body["patient_id"].i();
         string time = body["time"].s();
         double tariff = body["tariff"].d();
         string consultationType = body["consultation_type"].s();
 
-        bool success = rendezVousController.createAppointment(conn, doctorId, patientId, time, tariff, consultationType);
+        RendezVous rdv;
+
+        rdv.setDocteurId(doctorId);
+        rdv.setPatientId(patientId);
+        rdv.setTemps(time);
+        rdv.setTarifs(tariff);
+        rdv.setTypeConsultation(consultationType);
+
+        bool success = rendezVousController.createAppointment(conn, rdv);
         if (success) {
-            return crow::response(200, "Appointment created successfully.");
+            crow::json::wvalue SuccessResponse;
+            SuccessResponse["error"] = "Appointment created successfully.";
+            return crow::response(200, SuccessResponse);
         } else {
-            return crow::response(400, "Failed to create appointment.");
+            crow::json::wvalue errorResponse;
+            errorResponse["error"] = "Failed to create appointment.";
+            return crow::response(400, errorResponse);
         }
     });
 
