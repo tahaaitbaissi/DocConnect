@@ -85,6 +85,7 @@ bool UserController::registerUser(OracleConnection& conn, User* user) {
         return false;
     } else {
         user->create(conn);
+        //
         cout << "Registration successful for email: " << user->getEmail() << endl;
         return true;
     }

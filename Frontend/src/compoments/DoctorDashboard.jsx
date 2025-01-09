@@ -3,23 +3,25 @@ import axios from 'axios';
 import './DoctorDashboard.css'; // Assuming you have a CSS file for styling
 import { useUser } from "../UserContext";
 
+let appointments = [];
+
 const DoctorDashboard = () => {
-  const [appointments, setAppointments] = useState([]);
+  // const [appointments, setAppointments] = useState([]);
   const [patientDetails, setPatientDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
-
+  
   useEffect(() => {
     setLoading(true);
 
     // Fetch appointments for the doctor
     axios.get(`http://127.0.0.1:8080/rendezvous/doctor/${user.id}`)
     .then(response => {
-      const fetchedAppointments = response.data;
-      setAppointments(fetchedAppointments);
+      appointments = response.data ? response.data : [];
+      // setAppointments(fetchedAppointments);
 
       // Fetch patient details for each appointment
-      const patientPromises = fetchedAppointments.map(appointment => {
+      const patientPromises = appointments.map(appointment => {
         const { patient_id } = appointment;
 
         // If patient details are already cached, skip the API call

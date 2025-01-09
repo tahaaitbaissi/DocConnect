@@ -49,6 +49,21 @@ vector<Categorie> AdminController::getAllCategories(OracleConnection& conn) {
     return cats;
 }
 
+vector<Soins> AdminController::getAllSoins(OracleConnection& conn, int categorieId) {
+    vector<Soins> soins;
+    string query = "SELECT soin_id FROM Soins WHERE categorie_id = " + to_string(categorieId);
+    vector<map<string, string>> result = conn.executeQuery(query);
+
+    for (const auto& row : result) {
+        Soins soin;
+        int soinId = stoi(row.at("SOIN_ID"));
+        if (soin.read(conn, soinId)) {
+            soins.push_back(soin);
+        }
+    }
+    return soins;
+}
+
 // Delete a user by userId
 void AdminController::deleteUser(OracleConnection& conn, int userId) {
     string query = "DELETE FROM Users WHERE user_id = " + to_string(userId);

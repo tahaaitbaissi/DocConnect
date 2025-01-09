@@ -23,6 +23,7 @@ public:
     bool assignDoctorToCategory(OracleConnection& conn, int doctorId, int categoryId);
     bool assignDoctorToCity(OracleConnection& conn, int doctorId, int cityId);
     vector<Doctor> searchDoctorsByName(OracleConnection& conn, string name);
+    bool addSoinsToDoctor(OracleConnection& conn, int doctorId, vector<int>& soinIds);
 };
 
 #endif // DOCTORCONTROLLER_H_

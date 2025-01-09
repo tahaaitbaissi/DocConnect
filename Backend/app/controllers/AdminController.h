@@ -7,6 +7,7 @@
 #include "../models/Patient.h"
 #include "../models/Categorie.h"
 #include "../models/Ville.h"
+#include "../models/Soins.h"
 #include "../models/OracleConnection.h"
 
 using namespace std;
@@ -26,6 +27,7 @@ public:
 
     vector<Ville> getAllCities(OracleConnection& conn);
     vector<Categorie> getAllCategories(OracleConnection& conn);
+    vector<Soins> getAllSoins(OracleConnection& conn, int categorieId);
 };
 
 #endif // ADMINCONTROLLER_H_

@@ -95,3 +95,22 @@ vector<Doctor> DoctorController::searchDoctorsByName(OracleConnection& conn, str
     }
     return doctors;
 }
+
+bool DoctorController::addSoinsToDoctor(OracleConnection& conn, int doctorId, vector<int>& soinIds) {
+    try {
+        // Loop through all soins IDs and add them to the Doctor_Soins pivot table
+        for (int soinId : soinIds) {
+            Doctor doctor;
+            if (doctor.read(conn, doctorId)) {
+                doctor.addSoin(conn, soinId);
+            } else {
+                return false;  // If doctor doesn't exist, return false
+            }
+        }
+        return true;  // Successfully added all soins
+    } catch (const std::exception& e) {
+        cout << "Error adding soins to doctor: " << e.what() << endl;
+        return false;
+    }
+}
+

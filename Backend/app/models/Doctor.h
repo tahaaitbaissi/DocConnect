@@ -15,6 +15,7 @@ private:
     string consultationType;  // Single consultation type, e.g., "domicile", "video", "cabinet"
     int categorieId;          // Foreign key to Categories
     int villeId;              // Foreign key to Ville
+    vector<int> soins;
 
 public:
     Doctor();
@@ -25,7 +26,7 @@ public:
     ~Doctor();
 
     // CRUD Methods
-    void create(OracleConnection& conn); // Creates entries in Users (Doctor-specific data)
+    void create(OracleConnection& conn) override; // Creates entries in Users (Doctor-specific data)
     bool read(OracleConnection& conn, int userId); // Reads from Users (Doctor-specific data)
     void update(OracleConnection& conn); // Updates Users (Doctor-specific data)
     void deleteRecord(OracleConnection& conn); // Deletes from Users (Doctor-specific data)
@@ -41,6 +42,11 @@ public:
     void setCategorieId(int categorieId);
     int getVilleId();
     void setVilleId(int villeId);
+
+    void setSoins(vector<int> soins);
+    void addSoin(OracleConnection& conn, int soinId);
+    void removeSoin(OracleConnection& conn, int soinId);
+    void loadSoins(OracleConnection& conn);
 };
 
 #endif // DOCTOR_H_

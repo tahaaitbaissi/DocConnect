@@ -17,7 +17,6 @@ User::User(int id, string nom, string prenom, string email,
 User::~User() {}
 //
 void User::create(OracleConnection& conn) {
-    // Using concatenation for the SQL query string
     string query = "INSERT INTO Users (user_id, nom, prenom, email, password, adresse, telephone, sexe, role) "
     "VALUES (SEQ_USERS.NEXTVAL, '" + nom + "', '" + prenom + "', '" + email + "', '" + password + "', '"
     + adresse + "', '" + telephone + "', '" + sexe + "', '"+ role +"')";

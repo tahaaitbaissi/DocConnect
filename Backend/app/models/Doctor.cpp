@@ -80,3 +80,31 @@ void Doctor::setCategorieId(int categorieId) { this->categorieId = categorieId; 
 
 int Doctor::getVilleId() { return villeId; }
 void Doctor::setVilleId(int villeId) { this->villeId = villeId; }
+
+void Doctor::setSoins(vector<int> soins) {
+    this->soins = soins;
+}
+
+void Doctor::addSoin(OracleConnection& conn, int soinId) {
+    string query = "INSERT INTO Doctor_Soins (doctor_id, soin_id) VALUES (" + to_string(getId()) + ", " + to_string(soinId) + ")";
+    conn.executeQuery(query);
+}
+
+void Doctor::removeSoin(OracleConnection& conn, int soinId) {
+    string query = "DELETE FROM Doctor_Soins WHERE doctor_id = " + to_string(getId()) + " AND soin_id = " + to_string(soinId);
+    conn.executeQuery(query);
+}
+
+void Doctor::loadSoins(OracleConnection& conn) {
+    string query = "SELECT soin_id FROM Doctor_Soins WHERE doctor_id = " + to_string(getId());
+    vector<map<string, string>> resultData = conn.executeQuery(query);
+
+    soins.clear();  // Clear the current soins list
+
+    for (const auto& row : resultData) {
+        soins.push_back(stoi(row.at("SOIN_ID")));
+    }
+}
+
+
+

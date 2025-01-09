@@ -17,7 +17,7 @@ int main() {
     auto& cors = app.get_middleware<crow::CORSHandler>();
 
     cors
-    .global()
+    .global()// Set up Oracle connection (replace with actual connection setup)
     .headers("Origin", "Content-Type", "Accept")
     .methods("POST"_method, "GET"_method, "DELETE"_method, "PUT"_method)
     .prefix("/cors")
@@ -25,28 +25,14 @@ int main() {
     .prefix("/nocors")
     .ignore();
 
-    // Set up Oracle connection (replace with actual connection setup)
     OracleConnection conn;
-
     conn.connect();
 
-    // Set up the user routes
     setupUserRoutes(app, conn);
-
-    // Set up the doctor routes
     setupDoctorRoutes(app, conn);
-
-    // Set up the patient routes
     setupPatientRoutes(app, conn);
-
-    // Set up the rendezvous routes
     setupRendezVousRoutes(app, conn);
-
-    // Set up the search routes
     setupSearchRoutes(app, conn);
-
-    // Set up the admin routes
-
     setupAdminRoutes(app, conn);
 
     // Start the server

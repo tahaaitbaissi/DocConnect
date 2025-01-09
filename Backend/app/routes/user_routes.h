@@ -3,6 +3,7 @@
 
 #include "crow.h"
 #include "../controllers/UserController.h"
+#include "../controllers/DoctorController.h"
 #include "crow/middlewares/cors.h"
 
 void setupUserRoutes(crow::App<crow::CORSHandler>& app, OracleConnection& conn);

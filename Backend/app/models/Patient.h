@@ -19,7 +19,7 @@ public:
     ~Patient();
 
     // CRUD Methods
-    void create(OracleConnection& conn); // Creates entries in Users (Patient-specific data)
+    void create(OracleConnection& conn) override; // Creates entries in Users (Patient-specific data)
     bool read(OracleConnection& conn, int userId); // Reads from Users (Patient-specific data)
     void update(OracleConnection& conn); // Updates Users (Patient-specific data)
     void deleteRecord(OracleConnection& conn); // Deletes from Users (Patient-specific data)
